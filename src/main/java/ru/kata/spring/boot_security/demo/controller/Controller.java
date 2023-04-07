@@ -13,7 +13,6 @@ import ru.kata.spring.boot_security.demo.service.UserDetailsServiceImpl;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @org.springframework.stereotype.Controller
 @RequestMapping("/")
@@ -39,7 +38,7 @@ public class Controller {
         User u = (User) userService.loadUserByUsername(name);
         model.addAttribute("user", u);
 
-        return "userInfo";// - /
+        return "userInfoT";// - /
     }
 
     @PatchMapping("{id}")
@@ -48,7 +47,7 @@ public class Controller {
 
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
-            return "userInfo";
+            return "userInfoT";
         }
         userService.update(id, user);
         return "redirect:/";
@@ -61,56 +60,68 @@ public class Controller {
         User u = (User) userRepository.findByUserNameAndFetchRoles(name);
         model.addAttribute("user", u);
 
-        return "usersPage";
+        return "usersPageT";
     }
 
 
     @GetMapping("/admin/{idShow}")
     public String show(@PathVariable("idShow") Long id, Model model) {
         model.addAttribute("user", (User) userService.findOne(id));
-        return "usersPage";
+//        return "usersPageT";
+        return "showUser"; // не нужно
     }
 
-    @GetMapping("/admin/add")
+    @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
-        return "addUser";
+        return "addUserT";
     }
 
     // было без new
-    @PostMapping("/admin/add")
+    @PostMapping("/admin/new")
     public String createUser(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult) { // проверка на валидность введ данных
         if (bindingResult.hasErrors()) {
-            return "addUser";
+            return "addUserT";
         }
         userService.saveUser(user); // addUser(user);
         return "redirect:/admin";
 
     }
 
-    @DeleteMapping("/admin/delete/{id}")
+    @DeleteMapping("/admin/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/delete/{idDelete}")
+    @GetMapping("/admin/del{idDelete}")
     public String showDelete(@PathVariable("idDelete") Long id, Model model) {
         model.addAttribute("user", userService.findOne(id));
-        return "showDelete";
+        return "showDeleteT";
     }
 
-    //     методы для обновления данных юзера  /users/3/edit  без bootstrap
-    @GetMapping("/admin/edit/{id}")
+
+//    @GetMapping("/admin/edit/{id}")
+//    public String edit(Model model, @PathVariable("id") Long id) {
+//        User user = userService.findOne(id);
+//        List<Role> listRoles = userService.listRoles();
+//        model.addAttribute("user", user);
+//        model.addAttribute("listRoles", listRoles);
+//        return "editPage";
+//    }
+
+    @GetMapping("/admin/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id) {
         User user = userService.findOne(id);
-        List<Role> listRoles = userService.listRoles();
-        model.addAttribute("user", user);
-        model.addAttribute("listRoles", listRoles);
-        return "editPage";
+        model.addAttribute("user");
+
+        return "usersPageT";
     }
-    @PatchMapping("/admin/save/{id}")
-    public String saveUser(User user,@PathVariable("id") Long id) {
+    @PatchMapping("/admin/{id}")
+    public String saveUser(User user,BindingResult bindingResult,@PathVariable("id") Long id) {
+        if (bindingResult.hasErrors()) {
+            return "editPageT";
+        }
         userService.update(id,user);
 
         return "redirect:/admin";

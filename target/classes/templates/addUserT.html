@@ -4,11 +4,27 @@
 <html
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"
+    />
+</head>
 <body>
-
-
-
+<nav class="navbar navbar-dark bg-dark fixed top">
+    <div class="d-flex text-white">
+        <div class="p-2 w-100 bg-dark fs-5">
             <ul class="nav justify-content-left" th:object="${user}">
                 <div>
                     <strong>
@@ -105,10 +121,10 @@
                                     <div class="form-group">
                                         <label for="roles"><strong>Role</strong></label>
                                         <select class="custom-select" name="roles" id="roles">
-                                            <option value="1">USER</option>
+                                            <option selected>Role</option>
                                             <option value="2">ADMIN</option>
-                                            <option value="1,2">ADMIN-USER</option>
-
+                                            <option value="1,2">INSPECTOR</option>
+                                            <option value="1">USER</option>
 
                                         </select>
 
