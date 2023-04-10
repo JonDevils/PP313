@@ -11,15 +11,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-//    private final UserService userDetailsService;
-//
-//    private final UserValidator userValidator;
-//    @Autowired
-//    public AuthController( UserService userDetailsService, UserValidator userValidator) {
-//        this.userDetailsService = userDetailsService;
-//
-//        this.userValidator = userValidator;
-//    }
+
     @GetMapping("/login")
     public String loginPage() {
         return "auth/login";
