@@ -25,8 +25,7 @@ public class User implements UserDetails {
     @Size(min = 2, max = 30, message = "Name should be betwen 2 and 30 characters")
     private String username;
 
-    @Transient
-    private String passwordConfirm;
+
     @Column(name="password")
     private String password;
 
@@ -49,6 +48,9 @@ public class User implements UserDetails {
 
     @Column(name="age")
     private Long age;
+
+    @Transient
+    private String passwordConfirm;
 
     public User() {
     }
@@ -87,14 +89,13 @@ public class User implements UserDetails {
     }
 
 
-    @ManyToMany
+    @NotEmpty(message = "The role cannot be omitted")
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
- //   public Collection<? extends GrantedAuthority> mapRolesAutorities(Set<Role> roles) {
-//        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
-//    }
+
 
     public Long getId() {
         return id;
