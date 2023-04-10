@@ -9,7 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -82,11 +84,21 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
-//        return (Collection<? extends GrantedAuthority> (List) getRoles());
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+////        return (Collection<? extends GrantedAuthority> (List) getRoles());
+//    }
+@Override
+public Collection<? extends GrantedAuthority> getAuthorities() {
+    Set<Role> roles = getRoles();
+    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+    for (Role role : roles) {
+        authorities.add(new SimpleGrantedAuthority(role.getName()));
     }
+    return authorities;
+}
 
 
     @NotEmpty(message = "The role cannot be omitted")

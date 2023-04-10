@@ -79,7 +79,7 @@ public class AdminController {
         model.addAttribute("listRoles", listRoles);
         return "editPage";
     }
-    @PatchMapping("/save/{id}")
+    @PatchMapping("/edit/{id}")
     public String saveUser(@PathVariable("id") Long id,User user) {
         userService.update(id,user);
 
