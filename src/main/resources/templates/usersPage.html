@@ -98,7 +98,7 @@
                                         <td style="text-align: center"  th:text="${userI.getLastName()}"></td>
                                         <td style="text-align: center"  th:text="${userI.getAge()}"></td>
                                         <td style="text-align: center" th:text="${userI.getEmail()}"></td>
-                                        <td style="text-align: center" th:text="${userI.getAuthorities()}"></td>
+                                        
                                         <td>
                                              <th:block th:each="role : ${userI.getRoles()}">
                                                 <span th:switch="${role.getName()}">
